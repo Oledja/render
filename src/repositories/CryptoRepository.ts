@@ -1,4 +1,4 @@
-import { pool } from "../db/connection";
+import { client } from "../db/connection";
 import { Currency } from "../interfices/currency";
 import Crypto from "../interfices/Crypto";
 import {
@@ -8,17 +8,16 @@ import {
 } from "../utils/Queries";
 
 class CryptoRepository {
-    private connection = pool;
-
     getBySymbolAndTime = async (
         symbol: string,
         time: Date
     ): Promise<Crypto[]> => {
-        await this.connection.connect();
-        const result = await this.connection.query<Crypto>(
-            SELECT_BY_NAME_AND_TIME,
-            [symbol, time]
-        );
+        await client.connect();
+        const result = await client.query<Crypto>(SELECT_BY_NAME_AND_TIME, [
+            symbol,
+            time,
+        ]);
+        client.end();
         return result.rows;
     };
 
@@ -27,18 +26,20 @@ class CryptoRepository {
         time: Date,
         market: string
     ): Promise<Crypto[]> => {
-        await this.connection.connect();
-        const result = await this.connection.query<Crypto>(
+        await client.connect();
+        const result = await client.query<Crypto>(
             SELECT_BY_NAME_AND_TIME_AND_MARKET,
             [symbol, time, market]
         );
+        client.end();
         return result.rows;
     };
 
     save = async (crypto: Currency[]) => {
         try {
-            await this.connection.connect();
-            await this.connection.query(INSERT, [crypto]);
+            await client.connect();
+            await client.query(INSERT, [crypto]);
+            client.end();
         } catch (error) {
             console.log(error);
         }

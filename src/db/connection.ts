@@ -1,6 +1,6 @@
 import { createPool } from "mysql2/promise";
 import * as dontenv from "dotenv";
-import pg from "pg";
+import { Client } from "pg";
 
 dontenv.config();
 
@@ -10,20 +10,10 @@ const user = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
 const database = process.env.DB_DATABASE;
 
-export const pool = new pg.Client({
+export const client = new Client({
     host,
     port,
     user,
     password,
     database,
 });
-
-// const pool = createPool({
-//     host,
-//     port,
-//     user,
-//     password,
-//     database,
-// });
-
-// export { pool };
