@@ -26,7 +26,7 @@ app.all("*", (req, res, next) => {
 });
 app.use(
     cors({
-        origin: "188.163.45.86",
+        origin: "*",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         preflightContinue: false,
         optionsSuccessStatus: 204,
