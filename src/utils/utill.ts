@@ -20,6 +20,7 @@ const getAveragePrice = (currencies: Crypto[]): number => {
         currencies
             .map((currency) => currency.price)
             .reduce((price1, price2) => price1 + price2) / currencies.length;
+    console.log(avg);
     return +avg.toFixed(2);
 };
 
