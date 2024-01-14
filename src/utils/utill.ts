@@ -16,12 +16,10 @@ const getFilterTime = (filterTime: string): Date => {
 };
 
 const getAveragePrice = (currencies: Crypto[]): number => {
-    console.log("currencies", currencies);
     const avg =
         currencies
-            .map((c) => c.price)
+            .map((currency) => currency.price)
             .reduce((price1, price2) => price1 + price2) / currencies.length;
-    console.log("AVG", avg);
     return +avg.toFixed(2);
 };
 
