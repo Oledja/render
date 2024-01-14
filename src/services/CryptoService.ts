@@ -39,6 +39,10 @@ class CryptoService {
                         filterTime,
                         market
                     );
+                result = result.map((curr) => {
+                    curr.price = Number(curr.price);
+                    return curr;
+                });
                 return result;
             }
             result = await this.cryptoRepository.getBySymbolAndTime(
