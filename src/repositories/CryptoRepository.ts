@@ -37,11 +37,12 @@ class CryptoRepository {
     };
 
     save = async (crypto: Currency[]) => {
-        console.log("REPOSITORY");
-
-        const connection = await this.connection.getConnection();
-
-        await connection.query(INSERT, [crypto]);
+        try {
+            const connection = await this.connection.getConnection();
+            await connection.query(INSERT, [crypto]);
+        } catch (error) {
+            console.log(error);
+        }
     };
 }
 
