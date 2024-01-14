@@ -60,6 +60,7 @@ class CryptoService {
 
     saveRateByAllMarkets = async () => {
         try {
+            console.log("saveRateByAllMarkets");
             const cryptoToSave: Currency[] = [];
             const results = await Promise.all([
                 await this.coinBaseService.getCurrencyRate(),
@@ -68,6 +69,8 @@ class CryptoService {
                 await this.coinStatsService.getCurrencyRate(),
                 await this.kuCoinService.getCurrencyRate(),
             ]);
+            console.log("result is ready");
+
             results.forEach((crypto) => {
                 crypto.forEach((c) => {
                     cryptoToSave.push([
