@@ -10,10 +10,12 @@ const user = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
 const database = process.env.DB_DATABASE;
 
-export const client = new Client({
+const client = new Client({
     host,
     port,
     user,
     password,
     database,
 });
+client.connect();
+export { client };

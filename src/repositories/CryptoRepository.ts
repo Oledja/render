@@ -12,12 +12,10 @@ class CryptoRepository {
         symbol: string,
         time: Date
     ): Promise<Crypto[]> => {
-        await client.connect();
         const result = await client.query<Crypto>(SELECT_BY_NAME_AND_TIME, [
             symbol,
             time,
         ]);
-        client.end();
         return result.rows;
     };
 
@@ -26,22 +24,18 @@ class CryptoRepository {
         time: Date,
         market: string
     ): Promise<Crypto[]> => {
-        await client.connect();
         const result = await client.query<Crypto>(
             SELECT_BY_NAME_AND_TIME_AND_MARKET,
             [symbol, time, market]
         );
-        client.end();
         return result.rows;
     };
 
     save = async (crypto: Currency[]) => {
         try {
-            await client.connect();
             for (let i = 0; i < crypto.length; i++) {
                 await client.query(INSERT, [...crypto[i]]);
             }
-            client.end();
         } catch (error) {
             console.log(error);
         }
