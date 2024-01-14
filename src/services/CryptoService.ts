@@ -81,6 +81,7 @@ class CryptoService {
             });
             await this.cryptoRepository.save(cryptoToSave);
         } catch (error) {
+            console.log("CryptoService", error);
             throw new Error(getErrorMessage(error));
         }
     };
