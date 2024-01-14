@@ -38,7 +38,9 @@ class CryptoRepository {
     save = async (crypto: Currency[]) => {
         try {
             await client.connect();
-            await client.query(INSERT, [crypto]);
+            for (let i = 0; i < crypto.length; i++) {
+                await client.query(INSERT, [...crypto[i]]);
+            }
             client.end();
         } catch (error) {
             console.log(error);
