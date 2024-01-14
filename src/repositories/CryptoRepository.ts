@@ -14,12 +14,12 @@ class CryptoRepository {
         symbol: string,
         time: Date
     ): Promise<Crypto[]> => {
-        const connection = await this.connection.getConnection();
-        const result = await connection.query(SELECT_BY_NAME_AND_TIME, [
-            symbol,
-            time,
-        ]);
-        return result[0] as Crypto[];
+        await this.connection.connect();
+        const result = await this.connection.query<Crypto>(
+            SELECT_BY_NAME_AND_TIME,
+            [symbol, time]
+        );
+        return result.rows;
     };
 
     getBySymbolAndTimeAndMarket = async (
@@ -27,19 +27,18 @@ class CryptoRepository {
         time: Date,
         market: string
     ): Promise<Crypto[]> => {
-        const connection = await this.connection.getConnection();
-
-        const result = await connection.query(
+        await this.connection.connect();
+        const result = await this.connection.query<Crypto>(
             SELECT_BY_NAME_AND_TIME_AND_MARKET,
             [symbol, time, market]
         );
-        return result[0] as Crypto[];
+        return result.rows;
     };
 
     save = async (crypto: Currency[]) => {
         try {
-            const connection = await this.connection.getConnection();
-            await connection.query(INSERT, [crypto]);
+            await this.connection.connect();
+            await this.connection.query(INSERT, [crypto]);
         } catch (error) {
             console.log(error);
         }
