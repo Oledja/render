@@ -50,7 +50,7 @@ class CryptoService {
             return {
                 symbol,
                 name,
-                price,
+                price: Number(price),
                 market: "all markets",
             };
         } catch (error) {
